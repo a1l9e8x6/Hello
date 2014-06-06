@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>21FF5D37-0FEC-43D4-8D07-09FD9F1CB53A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Hello</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9BDB3F57-0A52-4D6A-BF90-4513A21CCE0C</key>
+		<string>../../../../../external/Box2D/HELLOWORD</string>
+	</dict>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9BDB3F57-0A52-4D6A-BF90-4513A21CCE0C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9BDB3F57-0A52-4D6A-BF90-4513A21CCE0C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>HELLOWORD</string>
+		</dict>
+	</array>
+</dict>
+</plist>

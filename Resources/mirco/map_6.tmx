@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="25" height="20" tilewidth="32" tileheight="32" backgroundcolor="#7d7d7d">
+ <tileset firstgid="1" name="cell_b_up" tilewidth="32" tileheight="32">
+  <image source="cell_b_up.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="2" name="cell_b_down" tilewidth="32" tileheight="32">
+  <image source="cell_b_down.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="3" name="cell_b_left" tilewidth="32" tileheight="32">
+  <image source="cell_b_left.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="4" name="cell_b_right" tilewidth="32" tileheight="32">
+  <image source="cell_b_right.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="5" name="arrow_des" tilewidth="32" tileheight="32">
+  <image source="arrow_des.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="9" name="cell_a" tilewidth="32" tileheight="32">
+  <image source="cell_a.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="10" name="spott" tilewidth="32" tileheight="32">
+  <image source="spott.png" width="64" height="64"/>
+ </tileset>
+ <layer name="ground" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzjZGBg4BwgTAwgpJbWdtDDz6N2ELaDHmlwONhBK/OxxTm97KCmXdgAPjuoDUaSHZTaS0xeorb5+PIrOWZRO/0SwgDGLAtT
+  </data>
+ </layer>
+ <layer name="build_left" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAAZgbSAKnqh5MdwxHQKhyYcbBH7cBvB63AqB2jYBQMTwAAIlcANA==
+  </data>
+ </layer>
+ <layer name="build_up" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYEAARiRMDCBF7XAAuMKHkQg8FAAx/hgqfhkFo2AUjIKRBgC1ZAAc
+  </data>
+ </layer>
+ <layer name="build_right" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAELFjEqA2Gix0jDQyXeBsudoyCUTAKRgEMAACwkAAd
+  </data>
+ </layer>
+ <layer name="build_down" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIw0wIeFRQB5gIhKPAtoBYuNgNE5GwUgBANiwADc=
+  </data>
+ </layer>
+ <layer name="spot" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYKA/4KKDHdx0sIOHDnaMglEwCkbBKBgFxAAA7QAAIg==
+  </data>
+ </layer>
+ <layer name="arrow_des" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFgxGwDbQDRsEoGAWjYBQMKQAALSAABw==
+  </data>
+ </layer>
+ <objectgroup name="collsion" width="25" height="20"/>
+ <objectgroup name="hero" width="25" height="20">
+  <object name="ball" type="int" x="128" y="0" width="32" height="32">
+   <properties>
+    <property name="move_dir" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="door" width="25" height="20">
+  <object name="men" x="0" y="128" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="jiguanlock" width="25" height="20">
+  <object name="jiguan_lock_2" type="int" x="480" y="128" width="32" height="32">
+   <properties>
+    <property name="lockcolor" value="2"/>
+    <property name="lockdir" value="4"/>
+    <property name="lockid" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="jiguankey" width="25" height="20">
+  <object name="jiguan_key_2" type="int" x="288" y="352" width="32" height="32">
+   <properties>
+    <property name="keycolor" value="2"/>
+    <property name="keydir" value="1"/>
+    <property name="keyid" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

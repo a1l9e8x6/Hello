@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="9" height="17" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="cell_b_up" tilewidth="32" tileheight="32">
+  <image source="cell_b_up.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="2" name="cell_b_down" tilewidth="32" tileheight="32">
+  <image source="cell_b_down.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="3" name="cell_b_left" tilewidth="32" tileheight="32">
+  <image source="cell_b_left.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="4" name="cell_b_right" tilewidth="32" tileheight="32">
+  <image source="cell_b_right.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="5" name="arrow_des" tilewidth="32" tileheight="32">
+  <image source="arrow_des.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="9" name="cell_a" tilewidth="32" tileheight="32">
+  <image source="cell_a.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="10" name="spott" tilewidth="32" tileheight="32">
+  <image source="spott.png" width="64" height="64"/>
+ </tileset>
+ <layer name="ground" width="9" height="17">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAEnEgYFxjsajiHIKZleAykGgBvpQLa
+  </data>
+ </layer>
+ <layer name="build_left" width="9" height="17">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAEzFjEhpqawe6+wWAfvdQAAEFAADQ=
+  </data>
+ </layer>
+ <layer name="build_right" width="9" height="17">
+  <data encoding="base64" compression="zlib">
+   eJxjYMANWPDIDWU19LaPHDWD3X2kqAEAUjQARQ==
+  </data>
+ </layer>
+ <layer name="build_up" width="9" height="17">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAEjGj0UASMWDC6/CigDwAAD/wACQ==
+  </data>
+ </layer>
+ <layer name="build_down" width="9" height="17">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF9ABMWPjoeKgCJjQaHQAADbQAEQ==
+  </data>
+ </layer>
+ <layer name="spot" width="9" height="17">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFwxXwEKGGmwg1XBS6AwAPkAAi
+  </data>
+ </layer>
+ <layer name="arrow_des" width="9" height="17">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAfsFKgdxSMHAAADSwABg==
+  </data>
+ </layer>
+ <objectgroup name="collsion" width="9" height="17">
+  <object name="1" x="0" y="192" width="32" height="160"/>
+  <object name="2" x="32" y="192" width="128" height="32"/>
+  <object name="3" x="128" y="320" width="128" height="32"/>
+  <object name="4" x="32" y="352" width="32" height="192"/>
+  <object name="5" x="96" y="352" width="32" height="192"/>
+  <object name="6" x="160" y="0" width="32" height="192"/>
+  <object name="7" x="224" y="0" width="32" height="192"/>
+  <object name="8" x="256" y="192" width="32" height="160"/>
+ </objectgroup>
+ <objectgroup name="door" width="9" height="17">
+  <object name="men" x="192" y="0" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="hero" width="9" height="17">
+  <object name="ball" type="int" x="64" y="512" width="32" height="32">
+   <properties>
+    <property name="move_dir" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="bigstone" width="9" height="17">
+  <object x="192" y="96" width="32" height="32"/>
+ </objectgroup>
+</map>
