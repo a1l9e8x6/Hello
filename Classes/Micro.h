@@ -22,6 +22,8 @@ using namespace std;
 #define tile_one_h  32
 #define MEN_TAG 998
 
+#define K_TAG_TIPS 1020
+
 #define max_mscale 1.25
 #define min_mscale 0.75
 
@@ -82,6 +84,7 @@ private:
 	Micro();
 	~Micro();
 
+    void TipMove();
 	void getLevelNotification(CCObject* obj);//关卡选择时捕获消息
 
 	CCSprite* bg_left_sprite ;//左侧的背景图
@@ -176,6 +179,10 @@ private:
    double deltay;
     
     void onExit();
+    
+    
+    //tip move
+    void tipMoveCallback(CCNode* pSender);
     
 public:
     CCNode* BTN_NODE;

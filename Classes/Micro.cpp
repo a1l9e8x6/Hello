@@ -3,8 +3,8 @@
 #include "PopupLayer.h"
 #include "LevelView.h"
 #include "Micro_Key.h"
-#include "CSVParse.h"
 #include "CsvUtil.h"
+#include "CSVParse.h"
 
 #include "curl/curl.h"
 
@@ -117,7 +117,7 @@ bool Micro::init(){
     
 	setTouchEnabled(true);
 
-	MZDataManager::sharedDataManager()->initLanguageString("mirco/language.json");
+	MZDataManager::sharedDataManager()->initLanguageString("mirco/language_str.json");
 	// 地图滚动有间隙 cocos2d 默认不是2D正交视图，貌似是这原因，所以要设置一下。
 	//CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
 
@@ -158,6 +158,7 @@ void Micro::initGame(){
 	ccnodelock = CCNode::create();
 
 	left_view(level);
+    TipMove();
 	loadMap(level);
 	
 
@@ -191,20 +192,22 @@ void Micro::initGame(){
     
   
     //我把2个按钮添加到ccnode上了。
-    BTN_NODE = CCNode::create();
-    ButtonSprite* my_button = ButtonSprite::createButtonSprite("mirco/button.png");
-    my_button->setPosition(CCPoint(200, 200));
-    my_button->setTag(10001);
-    my_button->setOnClickListener(this,click_selector(Micro::btncall));
-    BTN_NODE->addChild(my_button);
+//    BTN_NODE = CCNode::create();
+//    ButtonSprite* my_button = ButtonSprite::createButtonSprite("mirco/button.png");
+//    my_button->setPosition(CCPoint(200, 200));
+//    my_button->setTag(10001);
+//    my_button->setOnClickListener(this,click_selector(Micro::btncall));
+//    BTN_NODE->addChild(my_button);
+//    
+//    ButtonSprite* my_button2 = ButtonSprite::createButtonSprite("mirco/button.png");
+//    my_button2->setPosition(CCPoint(400, 400));
+//    my_button2->setTag(10002);
+//    my_button2->setOnClickListener(this,click_selector(Micro::btncall));
+//    BTN_NODE->addChild(my_button2);
+//    
+//    addChild(BTN_NODE);
     
-    ButtonSprite* my_button2 = ButtonSprite::createButtonSprite("mirco/button.png");
-    my_button2->setPosition(CCPoint(400, 400));
-    my_button2->setTag(10002);
-    my_button2->setOnClickListener(this,click_selector(Micro::btncall));
-    BTN_NODE->addChild(my_button2);
-    
-    addChild(BTN_NODE);
+   
 }
 
 //button 相应函数不执行 yinggai 进的 没进来啊
@@ -475,6 +478,50 @@ void Micro::left_view(int level_){
 		CCFiniteTimeAction * seq = CCSequence::create(scaleto2,NULL);	
 		ccnode_left->runAction(seq);
 	this->addChild(ccnode_left);
+
+}
+
+void Micro::TipMove(){
+    
+    CCLabelTTF* tip_font = CCLabelTTF::create(MZDataManager::sharedDataManager()->getLanguageString("str6").c_str(), "HiraKakuProN-W6", 36);
+    //tip_font->setRotation(45);
+    ccColor3B randcolor = ccc3(MZDataManager::sharedDataManager()->myRand(1, 255), MZDataManager::sharedDataManager()->myRand(1, 255), MZDataManager::sharedDataManager()->myRand(1, 255));
+    tip_font->setColor(randcolor);
+     tip_font->setTag(K_TAG_TIPS);
+    float tip_y = (MZDataManager::sharedDataManager()->myRand(1, 9)/10.0f)*SCR_SIZE.height;
+    CCLog("tip_y ===%.2f",tip_y);
+	tip_font->setPosition(ccp(SCR_SIZE.width+tip_font->getContentSize().width,tip_y));
+    
+    float speed = 100.0f;
+   CCActionInterval* move = CCMoveTo::create(SCR_SIZE.width/speed, ccp(-tip_font->getContentSize().width/2, tip_y));
+      CCActionInterval* delay = CCDelayTime::create(1.0f);
+    
+    CCCallFuncN* func = CCCallFuncN::create(this, callfuncN_selector(Micro::tipMoveCallback));
+    CCSequence* seq = CCSequence::create(move,delay,func,NULL);
+    
+    tip_font->runAction(seq);
+    this->addChild(tip_font,10);
+}
+
+void Micro::tipMoveCallback(CCNode* pSender){
+    CCSprite* psprite = dynamic_cast<CCSprite*>(pSender);
+    CCLog("backback");
+    
+    float speed = 100.0f;
+  
+    
+    ccColor3B randcolor = ccc3(MZDataManager::sharedDataManager()->myRand(1, 255), MZDataManager::sharedDataManager()->myRand(1, 255), MZDataManager::sharedDataManager()->myRand(1, 255));
+    psprite->setColor(randcolor);
+
+      float tip_newy = (MZDataManager::sharedDataManager()->myRand(1, 9)/10.0f)*SCR_SIZE.height;
+    psprite->setPosition(ccp(SCR_SIZE.width+psprite->getContentSize().width,tip_newy));
+    CCActionInterval* move = CCMoveTo::create(SCR_SIZE.width/speed, ccp(-psprite->getContentSize().width/2, tip_newy));
+    CCActionInterval* delay = CCDelayTime::create(1.0f);
+    
+    CCCallFuncN* func = CCCallFuncN::create(this, callfuncN_selector(Micro::tipMoveCallback));
+    CCSequence* seq = CCSequence::create(move,delay,func,NULL);
+    
+    psprite->runAction(seq);
 
 }
 
@@ -1587,6 +1634,8 @@ void Micro::gameover_btnCallback(CCNode* node){
     }
     else if(node->getTag()==1)
     {
+        
+      
 		CCScene* pScene = LevelView::scene();
 		 CCDirector::sharedDirector()->replaceScene(CCTransitionFade::create(2.0f,pScene));
     }
@@ -1603,7 +1652,8 @@ void Micro::nextLevel(){
     else
         level = 42;
 	 CCLog("nextLevelnextLevel ===%d",level);
-	 	initGame();
+    
+    initGame();
 	resetGame(level);
 	
 
@@ -1611,7 +1661,7 @@ void Micro::nextLevel(){
 
 
 void Micro::update(float t){
-   // CCLog("iclock ===%d",iclock);
+   // CCLog("iclock ===%d gamestate === %d",iclock,gameState);
     if(iclock<=65536)
         iclock++;
     else
@@ -1619,8 +1669,9 @@ void Micro::update(float t){
     
     if(gameState == GAMESTATE_RUN)
     {
-		if(iclock >= 100 && iclock % 100 ==  0 ){
-          // herocreate(_tileMap,"mirco/hero_0.png","hero","ball");
+		if(iclock >= 50 && iclock % 60 ==  0 ){
+           
+           herocreate(_tileMap,"mirco/hero_0.png","hero","ball");
         }
         
         collision_ball(t);
@@ -1678,6 +1729,7 @@ void Micro::resetGame(int level_){
     touch_oldPos = CCPointZero;
     touch_newPos = CCPointZero;
      iclock = 0;
+    gameState = GAMESTATE_RUN;
 	 xuanze_sprite->setVisible(false);
     
     mscale = 1.0f;
