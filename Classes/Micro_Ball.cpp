@@ -1,6 +1,6 @@
 ﻿#include "Micro_Ball.h"
 #include "MZDataManager.h"
-const float ball_speed = 4.0f;
+const float ball_speed = 8.0f;
 
 Micro_ball::Micro_ball(){
 	ball_dir = BALL_NONE;
@@ -60,7 +60,7 @@ bool Micro_ball::ballInit(CCTMXTiledMap* _tileMap,const char* filename,const cha
 		
 	particle_ball = CCParticleSystemQuad::create("mirco/lizi/guiji.plist");
 	particle_ball->setAnchorPoint(ccp(0.5,0.5));
-	particle_ball->setPosition(   ccp(tile_one_w/4,tile_one_h/4) );
+	particle_ball->setPosition(   ccp(tile_one_w/4,tile_one_h/5) );
 	CCLog("particle_ball an x=%.2f,y=%.2f",particle_ball->getPositionX(),particle_ball->getPositionY());
 	CCLog("particle_ball contentsize w =%.2f,h=%.2f",particle_ball->getContentSize().width,particle_ball->getContentSize().height);
 	this->addChild(particle_ball);

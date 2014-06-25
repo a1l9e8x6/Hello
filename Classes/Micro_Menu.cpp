@@ -123,40 +123,22 @@ bool Micro_Menu::init()
     addChild(ttf2,10);
     
     
-    MZDataManager::sharedDataManager()->resetRandSeed();
-    int id = MZDataManager::sharedDataManager()->myRand(1, 10);
-    if(id<=5)
-    {
-        CCLog("gogo");
-    }
-    else
-    {
-        CCLog("not go");
-    }
     
     
-//    CCSprite* testsprite = CCSprite::create("mirco/menu/menu_logo.png");
-//    testsprite->setAnchorPoint(CCPointZero);
-//    testsprite->setPosition(ccp(10,10));
-//   menu_bg->addChild(testsprite);
-//
-//    
-//
-
-    //this->addChild(menu_bg);
+    this->addChild(menu_bg);
     
   
-    MZDataManager::sharedDataManager()->resetRandSeed();
-    int idd =MZDataManager::sharedDataManager()->myRand(1, 10);
-    CCLog("idd===%d",idd);
-    if(idd<=5)
-    {
-        CCLog("go to jiading");
-    }
-    else
-        CCLog("go to rugao");
-    CCLayer* server_layer = ServerPrizeList::create();
-    this->addChild(server_layer);
+//    MZDataManager::sharedDataManager()->resetRandSeed();
+//    int idd =MZDataManager::sharedDataManager()->myRand(1, 10);
+//    CCLog("idd===%d",idd);
+//    if(idd<=5)
+//    {
+//        CCLog("go to jiading");
+//    }
+//    else
+//        CCLog("go to rugao");
+//    CCLayer* server_layer = ServerPrizeList::create();
+//    this->addChild(server_layer);
     
     
     return true;
