@@ -30,6 +30,8 @@ using namespace std;
 #define MAP_NOTIFICATION "MAP_NOTIFICATION"
 #define MICRO_KEY_NOTIFICATION "MICRO_KEY_NOTIFICATION"
 
+#define microfont "mirco/font.fnt"
+#define microtextureplist "mirco/texture.plist"
 
 //extern const int tile_onew ;//global variable (const can not with static )
 
@@ -180,6 +182,8 @@ private:
     
     void onExit();
     
+    
+
     
     //tip move
     void tipMoveCallback(CCNode* pSender);

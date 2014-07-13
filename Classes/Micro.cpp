@@ -10,8 +10,7 @@
 
 static int iclock = -1;
 
-#define microfont "mirco/font.fnt"
-#define microtextureplist "mirco/texture.plist"
+
 
 #define LEFT_DANGBAN_AMOUT_TAG 1000
 #define RIGHT_DANGBAN_AMOUT_TAG 1001
@@ -117,7 +116,7 @@ bool Micro::init(){
     
 	setTouchEnabled(true);
 
-	MZDataManager::sharedDataManager()->initLanguageString("mirco/language_str.json");
+	MZDataManager::sharedDataManager()->initLanguageString("mirco/str.json");
 	// 地图滚动有间隙 cocos2d 默认不是2D正交视图，貌似是这原因，所以要设置一下。
 	//CCDirector::sharedDirector()->setProjection(kCCDirectorProjection2D);
 
@@ -353,6 +352,7 @@ void Micro::left_view(int level_){
 	bg_left_sprite->setPosition(ccp(bg_left_sprite->getContentSize().width/2,bg_left_sprite->getContentSize().height/2));
 	ccnode_left->addChild(bg_left_sprite);
 
+    CCLog("9999999999999999999999999 =====",MZDataManager::sharedDataManager()->getLanguageString("str1").c_str());
 	CCLabelBMFont* cclm_b1 = CCLabelBMFont::create(MZDataManager::sharedDataManager()->getLanguageString("str1").c_str(),microfont);
 	cclm_b1->setPosition(ccp(SCR_SIZE.width/6,SCR_SIZE.height-cclm_b1->getContentSize().height-20));
 	testPoint = cclm_b1->getPosition();
@@ -1064,6 +1064,8 @@ void Micro::ccTouchesEnded(CCSet* pTouches,CCEvent* event){
 		
 			xuanze_sprite->setPosition(  	ccp(+tile_one_w/2+touch_collison_check_point.x,
 			tile_one_h/2+touch_collison_check_point.y )    );
+            CCLog("true =%d",true);
+            CCLog("false =%d",false);
 				CCLog("show_xuanze-before =%d",show_xuanze);
 			CCLog("xuanze_sprite x =%.2f ,y=%.2f ",  xuanze_sprite->getPositionX(),xuanze_sprite->getPositionY());
 
@@ -1352,7 +1354,9 @@ bool Micro::checkTool(CCTMXTiledMap* _tileMap,Micro_ball* sprite){
 				int kind = 	tool->get_tool_kind();
 				sprite->set_tool_dir(kind);
 				CCLog("checkTool xiangjiao----- tool_kind =%d",kind);
-				
+                
+                AudioManager::instance()->playEffect(kAudio_effect_attack);
+
 				return true; //
             }
 	}
