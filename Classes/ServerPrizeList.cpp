@@ -12,9 +12,9 @@
 
 ServerPrizeList::ServerPrizeList(){
     set_table_visisbleWidth(720);
-    set_table_visisbleHeight(450);
-    set_tablex(CCDirector::sharedDirector()->getWinSize().width/2-720/2);
-    set_tabley(-80);
+    set_table_visisbleHeight(400);
+    set_tablex(CCDirector::sharedDirector()->getWinSize().width/2-get_table_visisbleWidth()/2);
+    set_tabley(20);
 }
 
 ServerPrizeList::~ServerPrizeList(){
@@ -80,8 +80,7 @@ CCTableViewCell* ServerPrizeList::tableCellAtIndex(CCTableView *table, unsigned 
         
         
         
-        
-        CCScale9Sprite* ccs9sprite = CCScale9Sprite::create("table/cellbg.png", CCRectMake(0, 0, 210, 91));
+        CCScale9Sprite* ccs9sprite = CCScale9Sprite::create("table/cellbg.png");//, CCRectMake(0, 0, 210, 91)
         ccs9sprite->setContentSize(CCSizeMake(get_table_visisbleWidth(), ccs9sprite->getContentSize().height));
        // CCSprite* spritebg = CCSprite::create("table/cellbg.png");
         ccs9sprite->setAnchorPoint(CCPointZero);

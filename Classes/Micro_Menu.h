@@ -6,6 +6,7 @@
 #include "cocos-ext.h"
 #include "MZDataManager.h"
 #include "ServerPrizeList.h"
+#include "AudioManager.h"
 
 #define MENU_NEWGAME_FILEPATH "mirco/menu/menu_text.png"
 #define MENU_BG_FILEPATH "mirco/menu/menu_bg.png"
@@ -51,7 +52,7 @@ public:
     std::vector<CCSprite*> sprite_balls;
     vector<CCSprite*>::iterator iter_ball;
 
-    
+
 	
 	UILayer* ul; 
 	UILayer* ul_zc; 
@@ -72,7 +73,8 @@ public:
     
     void draw();
     
-
+private:
+        void sliderMove(CCObject* pSender);
 };
 
 #endif 

@@ -23,7 +23,7 @@
 		<string>Icon-152.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.fs.hello</string>
+	<string>com.fs.alex</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -41,6 +41,10 @@
 	<key>UIAppFonts</key>
 	<array/>
 	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>

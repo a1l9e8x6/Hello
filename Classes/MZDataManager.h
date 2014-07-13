@@ -13,6 +13,8 @@
 #include "cocos-ext.h"
 #include "Micro_Loading.h"
 #include "Micro.h"
+#include "XmlParser.h"
+
 //#include "json.h"
 using namespace cocos2d;
 using namespace std;
@@ -39,18 +41,28 @@ public:
 	void showLoading(CCNode* currentnode);
 	void delLoading();
 
-    
+    void initXMLString(const char* p_xml_name);
+     CCString* getStringfromXml( char* key);
     
     int myRand(int start,int end); //[start,end]
     void resetRandSeed();
+
+public:
+    std::string stringWrap(std::string str,int length);
+    std::vector<std::string>  parseUTF8(const std::string &str);
+    std::string subUTF8(const std::string &str,int from, int to);
     
 private:
     CSJson::Value languagedata;
+    
+
   
     MZDataManager();
 	~MZDataManager();
 
 	Micro_Loading* _loading;
 	bool bShowLoading;
+    
+    XMLParser *pXmlParser;
 };
 #endif /* defined(__client1__MZDataManager__) */

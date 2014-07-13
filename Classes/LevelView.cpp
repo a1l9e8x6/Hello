@@ -40,20 +40,20 @@ bool LevelView::init(){
        background->setPosition(SCR_CENTER_POINT);
        this->addChild(background);
         
-	   float scr_view_width = CCDirector::sharedDirector()->getWinSize().width;//640
-	   float scr_view_height = CCDirector::sharedDirector()->getWinSize().height;//480
+        float scr_view_width = 640; //CCDirector::sharedDirector()->getWinSize().width;//640
+        float scr_view_height = 480;//CCDirector::sharedDirector()->getWinSize().height;//480
 	   CCLog("scr_view_width ====%f scr_view_height ===== %f",scr_view_width,scr_view_height);
         // 添加一个半透明的灰显层
-        CCLayerColor* backLayerColor = CCLayerColor::create(ccc4(25, 25, 25, 125));
+        CCLayerColor* backLayerColor = CCLayerColor::create(ccc4(100, 255, 25, 125));
         backLayerColor->setContentSize(CCSizeMake(scr_view_width   ,scr_view_height));
-        backLayerColor->setPosition(ccp(0,0));
+        backLayerColor->setPosition(ccp(winSize.width/2-scr_view_width/2,winSize.height/2-scr_view_height/2));
         this->addChild(backLayerColor);
         
         // 创建一个 CCScrollView, 内容大小和当前的界面一样
        CCScrollView* scrollView = CCScrollView::create();
         scrollView->setViewSize((CCSizeMake(scr_view_width, scr_view_height)));
         CCLog("getContentSize width===%f,heigth ===%f",this->getContentSize().width,this->getContentSize().height);
-        scrollView->setPosition(ccp(0,0));//
+        scrollView->setPosition(backLayerColor->getPosition());//
         scrollView->setContainer(getContainLayer(scrollView->getViewSize()));
         scrollView->setTouchEnabled(false);
         setScrollView(scrollView);
@@ -195,7 +195,7 @@ void LevelView::adjustScrollView(float offset){
 
 CCLayer* LevelView::getContainLayer(const CCSize& srsi){
     // 48 个关卡
-    int levelCount = 49;
+    int levelCount = 19;
     int widthCount =4;//一行4个
     int heightCount = 4; //一列4个
     m_nPageCount = (levelCount ) / (widthCount * heightCount) ;

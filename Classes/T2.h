@@ -5,6 +5,7 @@
 #include "cocos-ext.h"
 #include "math.h"
 #include "ChessNode.h"
+#include "AudioManager.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;

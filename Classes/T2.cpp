@@ -9,7 +9,7 @@ int arr_Num [4][4]= {
 	{-1,-1,-1,-1},
 	{-1,-1,-1,-1},
 	{-1,-1,-1,-1}
-};//∆Â≈Ã ˝◊�?
+};//‚àÜ√Ç‚âà√É¬†Àù‚óä√?
 
 T2::T2():move_state(MOVE_NONE),isMoving(0),game_state(GAME_RUN){
 	dir_guester = DIR_NONE;
@@ -66,13 +66,30 @@ bool T2::init(){
 void T2::setupView(){
 	CCLog("%s","setupView");
 
-	CCSprite* bgspr = CCSprite::create("HelloWorld.png");
-	bgspr->setPosition(ccp(SCR_SIZE.width/2,SCR_SIZE.height/2));
-	this->addChild(bgspr,-1);
+//	CCSprite* bgspr = CCSprite::create("HelloWorld.png");
+//	bgspr->setPosition(ccp(SCR_SIZE.width/2,SCR_SIZE.height/2));
+//	this->addChild(bgspr,-1);
+    
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+    
+	CCLog("visibleSize width ==%.2f height ==%.2f",visibleSize.width,visibleSize.height);
+    
+    
+    AudioManager::instance()->playGroundMusic(kAudio_jingyiwanzhuan);
+    AudioManager::instance()->updateGroundMusicVolume(0.8f);
+    
+    MZDataManager::sharedDataManager()->initXMLString("mirco/strings.xml");
+    CCString* currentScore = MZDataManager::sharedDataManager()->getStringfromXml("currentScore");
+    const char* cus = currentScore->m_sString.c_str();
 
-	CCLabelBMFont* cclm_b1 = CCLabelBMFont::create(MZDataManager::sharedDataManager()->getLanguageString("str51").c_str(),"2048/menu.fnt");
+    
+	CCLabelBMFont* cclm_b1 = CCLabelBMFont::create(cus,"2048/menu.fnt");
 	cclm_b1->setPosition(ccp(SCR_SIZE.width/2-150,SCR_SIZE.height-cclm_b1->getContentSize().height-10));
 	this->addChild(cclm_b1);
+
+ 
+    
 
 	char cur[16];
 	sprintf(cur,"%d",current_score);
@@ -80,11 +97,18 @@ void T2::setupView(){
 	cclbmf_score->setPosition(ccp(SCR_SIZE.width/2-50,SCR_SIZE.height-cclbmf_score->getContentSize().height-10));
 	this->addChild(cclbmf_score);
 
+    
+    CCString* maxScore = MZDataManager::sharedDataManager()->getStringfromXml("maxScore");
+    const char* mas = maxScore->m_sString.c_str();
 
-
-	CCLabelBMFont* cclm_b2 = CCLabelBMFont::create(MZDataManager::sharedDataManager()->getLanguageString("str52").c_str(),"2048/menu.fnt");
-	cclm_b2->setPosition(ccp(SCR_SIZE.width/2+100,SCR_SIZE.height-cclm_b2->getContentSize().height-10));
+	CCLabelBMFont* cclm_b2 = CCLabelBMFont::create(mas,"2048/menu.fnt");
+	cclm_b2->setPosition(ccp(SCR_SIZE.width/2+80,SCR_SIZE.height-cclm_b2->getContentSize().height-10));
 	this->addChild(cclm_b2);
+    
+//    CCLabelTTF* ttf = CCLabelTTF::create("沙沙快来膜拜一下~", "HelveticaNeue", 36.0f);
+//    ttf->setPosition(ccpAdd(ccp(50, -150),  cclm_b1->getPosition()));
+//    this->addChild(ttf);
+
 
 
 	
@@ -114,8 +138,8 @@ void T2::setupView(){
 void T2::checkMove(int dir_guester)
 {
 	if(dir_guester== DIR_RIGHT){
-		//œÚ”�?
-		if (move_state == MOVE_YD1) //µ⁄“ª≤Ω“∆∂�?
+		//≈ì√ö‚Äù‚Ä?
+		if (move_state == MOVE_YD1) //¬µ‚ÅÑ‚Äú¬™‚â§Œ©‚Äú‚àÜ‚àÇ√?
 		{
 			for (int i=0;i<MAX_ROW;i++)
 			{
@@ -124,7 +148,7 @@ void T2::checkMove(int dir_guester)
 					int index  = -1;
 					int count = 0;
 
-					if(arr_Num[i][j]>-1&&arr_Num[i][j+1]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+					if(arr_Num[i][j]>-1&&arr_Num[i][j+1]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 					{
 						bemoved_yd1 = true;
 
@@ -154,7 +178,7 @@ void T2::checkMove(int dir_guester)
 				move_state = MOVE_HETI;
 			}
 		}
-		else if(move_state == MOVE_HETI)//µ�?≤Ω∫œ≥�?
+		else if(move_state == MOVE_HETI)//¬µ‚Å?‚â§Œ©‚à´≈ì‚â•‚Ä?
 		{
 			CCLog("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
 
@@ -223,7 +247,7 @@ void T2::checkMove(int dir_guester)
 				{
 					int index  = -1;
 					int count = 0;
-					if(arr_Num[i][j]>-1&&arr_Num[i][j+1]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+					if(arr_Num[i][j]>-1&&arr_Num[i][j+1]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 					{
 						index = j+1;
 						while (arr_Num[i][index]==-1)
@@ -264,9 +288,9 @@ void T2::checkMove(int dir_guester)
 
 
 	else if(dir_guester== DIR_LEFT){
-		//œÚ”�?
+		//≈ì√ö‚Äù‚Ä?
 
-		if (move_state == MOVE_YD1) //µ⁄“ª≤Ω“∆∂�?
+		if (move_state == MOVE_YD1) //¬µ‚ÅÑ‚Äú¬™‚â§Œ©‚Äú‚àÜ‚àÇ√?
 		{
 			for (int i=0;i<MAX_ROW;i++)
 			{
@@ -275,7 +299,7 @@ void T2::checkMove(int dir_guester)
 					int index  = -1;
 					int count = 0;
 
-					if(arr_Num[i][j]>-1&&arr_Num[i][j-1]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+					if(arr_Num[i][j]>-1&&arr_Num[i][j-1]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 					{
 						bemoved_yd1 = true;
 
@@ -305,7 +329,7 @@ void T2::checkMove(int dir_guester)
 				move_state = MOVE_HETI;
 			}
 		}
-		else if(move_state == MOVE_HETI)//µ�?≤Ω∫œ≥�?
+		else if(move_state == MOVE_HETI)//¬µ‚Å?‚â§Œ©‚à´≈ì‚â•‚Ä?
 		{
 
 			update_moveyd1();
@@ -363,7 +387,7 @@ void T2::checkMove(int dir_guester)
 					int index  = -1;
 					int count = 0;
 
-					if(arr_Num[i][j]>-1&&arr_Num[i][j-1]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+					if(arr_Num[i][j]>-1&&arr_Num[i][j-1]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 					{
 						bemoved_yd1 = true;
 
@@ -402,9 +426,9 @@ void T2::checkMove(int dir_guester)
 
 	}
 
-	else if(dir_guester == DIR_UP){	//œÚ…�?
+	else if(dir_guester == DIR_UP){	//≈ì√ö‚Ä¶≈?
 
-		if (move_state == MOVE_YD1) //µ⁄“ª≤Ω“∆∂�?
+		if (move_state == MOVE_YD1) //¬µ‚ÅÑ‚Äú¬™‚â§Œ©‚Äú‚àÜ‚àÇ√?
 		{
 			for (int j =0; j < MAX_COL ; j++)//lie
 			{
@@ -412,7 +436,7 @@ void T2::checkMove(int dir_guester)
 				{
 					int index  = -1;
 					int count = 0;
-					if(arr_Num[i][j]>-1&&arr_Num[i+1][j]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+					if(arr_Num[i][j]>-1&&arr_Num[i+1][j]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 					{
 						bemoved_yd1 = true;
 
@@ -443,7 +467,7 @@ void T2::checkMove(int dir_guester)
 				move_state = MOVE_HETI;
 			}
 		}
-		else if(move_state == MOVE_HETI)//µ�?≤Ω∫œ≥�?
+		else if(move_state == MOVE_HETI)//¬µ‚Å?‚â§Œ©‚à´≈ì‚â•‚Ä?
 		{
 			CCLog("mmmmmmmmmmmmmmmmmm");
 
@@ -501,7 +525,7 @@ void T2::checkMove(int dir_guester)
 				{
 					int index  = -1;
 					int count = 0;
-					if(arr_Num[i][j]>-1&&arr_Num[i+1][j]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+					if(arr_Num[i][j]>-1&&arr_Num[i+1][j]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 					{
 						bemoved_yd1 = true;
 
@@ -543,7 +567,7 @@ void T2::checkMove(int dir_guester)
 	}
 
 	else if(dir_guester == DIR_DOWN){
-		if (move_state == MOVE_YD1) //µ⁄“ª≤Ω“∆∂�?
+		if (move_state == MOVE_YD1) //¬µ‚ÅÑ‚Äú¬™‚â§Œ©‚Äú‚àÜ‚àÇ√?
 		{
 			for (int j =0; j < MAX_COL ; j++)//lie
 			{
@@ -551,7 +575,7 @@ void T2::checkMove(int dir_guester)
 				{
 					int index  = -1;
 					int count = 0;
-					if(arr_Num[i][j]>-1&&arr_Num[i-1][j]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+					if(arr_Num[i][j]>-1&&arr_Num[i-1][j]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 					{
 						bemoved_yd1 = true;
 
@@ -582,7 +606,7 @@ void T2::checkMove(int dir_guester)
 				move_state = MOVE_HETI;
 			}
 		}
-		else if(move_state == MOVE_HETI)//µ�?≤Ω∫œ≥�?
+		else if(move_state == MOVE_HETI)//¬µ‚Å?‚â§Œ©‚à´≈ì‚â•‚Ä?
 		{
 			CCLog("mmmmmmmmmmmmmmmmmm");
 
@@ -641,7 +665,7 @@ void T2::checkMove(int dir_guester)
 				{
 					int index  = -1;
 					int count = 0;
-					if(arr_Num[i][j]>-1&&arr_Num[i-1][j]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+					if(arr_Num[i][j]>-1&&arr_Num[i-1][j]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 					{
 						bemoved_yd1 = true;
 
@@ -697,7 +721,7 @@ bool T2::checkGameOver()
 	{
 		for (int j = MAX_COL-2; j >=0 ; --j)
 		{
-			if(arr_Num[i][j]>-1&&arr_Num[i][j+1]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+			if(arr_Num[i][j]>-1&&arr_Num[i][j+1]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 				over_check_move_right = true;
 		}
 	}
@@ -723,7 +747,7 @@ bool T2::checkGameOver()
 	{
 		for (int j =1; j < MAX_COL ; j++)
 		{
-			if(arr_Num[i][j]>-1&&arr_Num[i][j-1]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+			if(arr_Num[i][j]>-1&&arr_Num[i][j-1]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 				over_check_move_left = true;
 		}
 	}
@@ -747,7 +771,7 @@ bool T2::checkGameOver()
 	{
 		for (int i= MAX_ROW-2;i>=0;i--)//hang
 		{
-			if(arr_Num[i][j]>-1&&arr_Num[i+1][j]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+			if(arr_Num[i][j]>-1&&arr_Num[i+1][j]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 			{
 				over_check_move_up = true;
 			}
@@ -774,7 +798,7 @@ bool T2::checkGameOver()
 	{
 		for (int i= 1;i< MAX_ROW;i++)//hang
 		{
-			if(arr_Num[i][j]>-1&&arr_Num[i-1][j]==-1)//»Áπ˚”“±ﬂ «ø’µ�?
+			if(arr_Num[i][j]>-1&&arr_Num[i-1][j]==-1)//¬ª√ÅœÄÀö‚Äù‚Äú¬±Ô¨Ç¬†¬´√∏‚Äô¬µ∆?
 			{
 				over_check_move_down = true;
 			}
@@ -842,7 +866,7 @@ void T2::change(int dir,int row,int col,int value){
 
 	if(dir == DIR_RIGHT||dir==DIR_LEFT){
 		CCObject *temp;  
-		//ªÒµ√rootnode∏˘œ¬µƒΩ⁄µ�? 
+		//¬™√í¬µ‚àörootnode‚àèÀò≈ì¬¨¬µ∆íŒ©‚ÅÑ¬µ‚Ä? 
 		CCArray *nodeArray =cnode ->getChildren(); 
 		CCARRAY_FOREACH(nodeArray, temp)  
 		{  		
@@ -868,7 +892,7 @@ void T2::change(int dir,int row,int col,int value){
 
 	else if(dir == DIR_UP||dir==DIR_DOWN){
 		CCObject *temp;  
-		//ªÒµ√rootnode∏˘œ¬µƒΩ⁄µ�? 
+		//¬™√í¬µ‚àörootnode‚àèÀò≈ì¬¨¬µ∆íŒ©‚ÅÑ¬µ‚Ä? 
 		CCArray *nodeArray =cnode ->getChildren(); 
 		CCARRAY_FOREACH(nodeArray, temp)  
 		{  		
@@ -897,7 +921,7 @@ void T2::change(int dir,int row,int col,int value){
 void T2::removeChessnode(int dir,int row,int col){
 	if(dir == DIR_RIGHT||dir == DIR_LEFT){
 		CCObject *temp;  
-		//ªÒµ√rootnode∏˘œ¬µƒΩ⁄µ�? 
+		//¬™√í¬µ‚àörootnode‚àèÀò≈ì¬¨¬µ∆íŒ©‚ÅÑ¬µ‚Ä? 
 		CCArray *nodeArray =cnode ->getChildren(); 
 
 		CCLog("before-childcount = %d",cnode->getChildrenCount());
@@ -918,7 +942,7 @@ void T2::removeChessnode(int dir,int row,int col){
 	else if(dir == DIR_UP||dir == DIR_DOWN)
 	{
 		CCObject *temp;  
-		//ªÒµ√rootnode∏˘œ¬µƒΩ⁄µ�? 
+		//¬™√í¬µ‚àörootnode‚àèÀò≈ì¬¨¬µ∆íŒ©‚ÅÑ¬µ‚Ä? 
 		CCArray *nodeArray =cnode ->getChildren(); 
 
 		CCLog("before-childcount = %d",cnode->getChildrenCount());
@@ -1002,7 +1026,7 @@ void T2::ccTouchesBegan(CCSet* touches,CCEvent* event){
 	}
 	cocos2d::CCTouch* pTouch = (cocos2d::CCTouch*)touches->anyObject();
 
-	//ªÒ»°µ±«∞”√ªß¥•∆¡µ„◊¯±Í≤¢Ω�?d◊¯±Í”≥…�?d◊¯±Íœ�?
+	//¬™√í¬ª¬∞¬µ¬±¬´‚àû‚Äù‚àö¬™√ü¬•‚Ä¢‚àÜ¬°¬µ‚Äû‚óä¬Ø¬±√ç‚â§¬¢Œ©¬?d‚óä¬Ø¬±√ç‚Äù‚â•‚Ä¶‚Ä?d‚óä¬Ø¬±√ç≈ì¬?
 	//CCPoint touchPoint = touch->getLocationInView();
 	//touchPoint = CCDirector::sharedDirector()->convertToGL( touchPoint );
 	//oldx = touchPoint.x;
@@ -1084,7 +1108,7 @@ void T2::ccTouchesEnded(CCSet* touches,CCEvent* event){
 
 
 //void T2::registerWithTouchDispatcher(){
-	// ’‚¿Ôµƒ¥•√˛”≈œ»º∂…Ë÷√Œ�?-128 ’‚±£÷§¡À£¨∆¡±Œœ¬∑Ωµƒ¥•√˛
+	// ‚Äô‚Äö¬ø√î¬µ∆í¬•‚Ä¢‚àöÀõ‚Äù‚âà≈ì¬ª¬∫‚àÇ‚Ä¶√ã√∑‚àö≈í‚Ñ?-128 ‚Äô‚Äö¬±¬£√∑¬ß¬°√Ä¬£¬®‚àÜ¬°¬±≈í≈ì¬¨‚àëŒ©¬µ∆í¬•‚Ä¢‚àöÀõ
 	//CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 //}
 
@@ -1103,7 +1127,7 @@ void T2::resetRandSeed(){
 }
 
 
-void T2::getDiffRandNumer(int start,int end){//�õ�[STRART,END]  quality�����ظ��������
+void T2::getDiffRandNumer(int start,int end){//µ√µΩ[STRART,END]  quality∏ˆ≤ª÷ÿ∏¥µƒÀÊª˙ ˝
 
 	resetRandSeed();
    const int quality = 9;
@@ -1117,7 +1141,7 @@ void T2::getDiffRandNumer(int start,int end){//�õ�[STRART,END]  quality�����ظ�
 	{
 		sequence[i] = i+start;
 	}
-	//≤˙…�?∏ˆ≤ªœ‡Õ¨ÀÊª˙«“‘⁄[start.end]∑∂Œßƒ⁄µƒÀÊª˙ ˝
+	//‚â§Àô‚Ä¶À?‚àèÀÜ‚â§¬™≈ì‚Ä°√ï¬®√Ä√ä¬™Àô¬´‚Äú‚Äò‚ÅÑ[start.end]‚àë‚àÇ≈í√ü∆í‚ÅÑ¬µ∆í√Ä√ä¬™Àô¬†Àù
 	for (int i = 0; i < quality; i++)
 	{
 		int number = myRand(start,end );
@@ -1135,13 +1159,13 @@ void T2::getDiffRandNumer(int start,int end){//�õ�[STRART,END]  quality�����ظ�
 
 }
 
-void T2::initChess(int start ,int end){//ÀÊª˙÷÷◊”“™∑≈‘⁄—≠ª∑Õ�?
+void T2::initChess(int start ,int end){//√Ä√ä¬™Àô√∑√∑‚óä‚Äù‚Äú‚Ñ¢‚àë‚âà‚Äò‚ÅÑ‚Äî‚â†¬™‚àë√ï‚Ä?
 	//MyCCLog::set_showinfo(false);
 	//MyCCLog::info("initChess");
 	MyCCLog::verbose("%d",true);
 	MyCCLog::verbose("%d",false);
 
-	//ÃÓ≥‰±≥æ�?
+	//√É√ì‚â•‚Ä∞¬±‚â•√¶‚à?
 	/*int init_chess_x = (ccsize.width-110*4)/2;
 	int init_chess_y = (ccsize.height-110*4)/2;
 	for (int i = 0; i < MAX_ROW; i++)
@@ -1252,7 +1276,7 @@ void T2::initChess(int start ,int end){//ÀÊª˙÷÷◊”“™∑≈‘⁄—
 
 
 }
-//√ø≤Ω÷Ë∂º“™∏¸–¬œ‘ æ∆Â≈∆ ˝◊�?
+//‚àö√∏‚â§Œ©√∑√ã‚àÇ¬∫‚Äú‚Ñ¢‚àè¬∏‚Äì¬¨≈ì‚Äò¬†√¶‚àÜ√Ç‚âà‚àÜ¬†Àù‚óä√?
 void T2::update_moveyd1()
 {
 	//CCLog("node_array length=====  %d",node_array->count());
@@ -1304,6 +1328,8 @@ void T2::resetGame()
 	game_state = GAME_RUN;
     addNewChess();
     addNewChess();
+    
+    cclbmf_score->setString("0");
 }
 
 
@@ -1499,7 +1525,7 @@ void T2::addNewChess()
 	}*/
 
 	resetRandSeed();
-	//»Áπ˚≤˙…˙µƒŒª÷√…œµƒ ˝≤ª «-1£¨æÕ“ª÷±≤˙…˙£�?
+	//¬ª√ÅœÄÀö‚â§Àô‚Ä¶Àô¬µ∆í≈í¬™√∑‚àö‚Ä¶≈ì¬µ∆í¬†Àù‚â§¬™¬†¬´-1¬£¬®√¶√ï‚Äú¬™√∑¬±‚â§Àô‚Ä¶Àô¬£¬?
 
 	int index = myRand(0,15);
 	CCLog("indx = %d",index);

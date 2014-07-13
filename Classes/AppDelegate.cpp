@@ -1,9 +1,12 @@
 #include "AppDelegate.h"
 #include "T2.h"
 #include "Micro_Menu.h"
+#include "Gundong.h"
+
 //#include "ServerPrizeList.h"
 
 
+bool isT2 = true;
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {
@@ -24,20 +27,28 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CCSize framesize = pEGLView->getFrameSize();
 	//实际屏幕的宽高比
 	float screen_scale = framesize.height/framesize.width;
+    if(!isT2){
 	float desgin_height = 640;
 	float desgin_width = desgin_height/screen_scale;
-	//float desgin_width = 960;
-	//float desgin_height = desgin_width/screen_scale;
+        CCLOG("AppDelegate %f %f,%f,<%f,%f>",screen_scale,desgin_width,desgin_height,framesize.width,framesize.height);
+        
+        //pEGLView->setDesignResolutionSize(width,height,kResolutionFixedWidth);
+        
+        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(desgin_width,desgin_height,kResolutionFixedWidth);
 
-//	float height = 640;
-//	float width = height/scale;
+    }else{
+        
+        float desgin_width = 640;
+        float desgin_height = desgin_width*screen_scale;
+        CCLOG("AppDelegate %f %f,%f,<%f,%f>",screen_scale,desgin_width,desgin_height,framesize.width,framesize.height);
+        CCLog("diaodiao");
+        //pEGLView->setDesignResolutionSize(width,height,kResolutionFixedWidth);
+        
+        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(desgin_width,desgin_height,kResolutionFixedHeight);
 
-	CCLOG("AppDelegate %f %f,%f,<%f,%f>",screen_scale,desgin_width,desgin_height,framesize.width,framesize.height);
+    }
 
-	//pEGLView->setDesignResolutionSize(width,height,kResolutionFixedWidth);
-
-	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(desgin_width,desgin_height,kResolutionFixedWidth);
-
+	
     // turn on display FPS
     pDirector->setDisplayStats(true);
 
@@ -47,10 +58,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // create a scene. it's an autorelease object
    // CCScene *pScene = SanX::scene();//ConMap::create();
 
-	//CCScene* pScene = T2::scene();
-	CCScene* pScene = Micro_Menu::scene();//
-    pDirector->runWithScene(pScene);
-
+    if(isT2){
+        
+        CCScene* pScene = Gundong::scene();
+        pDirector->runWithScene(pScene);
+    }
+    else{
+        CCScene* pScene = Micro_Menu::scene();//
+        pDirector->runWithScene(pScene);
+    
+    }
     return true;
 }
 

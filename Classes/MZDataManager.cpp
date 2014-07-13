@@ -25,8 +25,22 @@ MZDataManager::MZDataManager()
 
 MZDataManager::~MZDataManager(){
 //	CC_SAFE_RELEASE(micro);
+    CC_SAFE_RELEASE(pXmlParser);
 }
 
+void MZDataManager::initXMLString(const char* p_xml_name){
+    pXmlParser = XMLParser::parseWithFile(p_xml_name);
+    pXmlParser->retain();
+}
+
+CCString* MZDataManager::getStringfromXml( char* key){
+    if(pXmlParser){
+        CCString* cstr = pXmlParser->getString(key);
+    return cstr;
+    }
+    return NULL;
+    
+}
 
 void MZDataManager::writeFile(std::string filename, std::string value)
 {
@@ -197,6 +211,123 @@ void MZDataManager::showLoading( CCNode* currentnode )
 	}
 	
 }
+
+
+
+std::vector<std::string>  MZDataManager::parseUTF8(const std::string &str) {
+    
+	int l = str.length();
+    
+	std::vector<std::string> ret;
+    
+	ret.clear();
+    
+	for(int p = 0; p < l; ) {
+        
+		int size;
+        
+		unsigned char c = str[p];
+        
+		if(c < 0x80) {
+            
+			size = 1;
+            
+		} else if(c < 0xc2) {
+            
+		} else if(c < 0xe0) {
+            
+			size = 2;
+            
+		} else if(c < 0xf0) {
+            
+			size = 3;
+            
+		} else if(c < 0xf8) {
+            
+			size = 4;
+            
+		} else if (c < 0xfc) {
+            
+			size = 5;
+            
+		} else if (c < 0xfe) {
+            
+			size = 6;
+            
+		}
+        
+		std::string temp = "";
+        
+		temp = str.substr(p, size);
+        
+		ret.push_back(temp);
+        
+		p += size;
+        
+	}
+    
+	return ret;
+    
+}
+
+std::string MZDataManager::subUTF8(const std::string &str,int from, int to)
+{
+    
+	if(from > to) return "";
+    
+	std::vector<std::string> test = parseUTF8(str);
+    
+	if (test.size() < to) return str;
+    
+	std::vector<string>::iterator iter = test.begin();
+    
+	std::string res;
+    
+	std::string result;
+    
+	for(iter=(test.begin() + from); iter != (test.begin() + to); iter++)
+	{
+        
+		res += *iter;
+        
+	}
+    
+	return res;
+    
+}
+
+std::string MZDataManager::stringWrap(std::string str, int iCurrentIndex)
+{
+	if (str.length() > 0 &&iCurrentIndex > 0) {
+        
+		stringstream result;
+        
+		std::vector<std::string> temp = parseUTF8(str);
+        
+		int iStringLength = temp.size();
+        
+		int index = iCurrentIndex;
+        
+		for (int i = 0;i < iStringLength;i++) {
+            
+			result<<temp[i];
+            
+			if (iCurrentIndex == i)
+			{
+				result<<"\n";
+				iCurrentIndex +=index;
+			}
+		}
+		return result.str();
+        
+	} else {
+        
+		return "";
+        
+	}
+}
+
+
 
 void MZDataManager::delLoading()
 {

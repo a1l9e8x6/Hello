@@ -3,9 +3,19 @@
 #include "LevelView.h"
 #include "CUNinePatch.h"
 
+
+const char * g_sliderTable [] = {
+    "mirco/sliderTrack3.png",
+    "mirco/sliderProgress3.png",
+    "mirco/sliderThumb.png",
+};
+
+
+
 Micro_Menu::Micro_Menu(){
 
     menu_bg = NULL;
+    
 }
 
 Micro_Menu::~Micro_Menu(){
@@ -114,8 +124,19 @@ bool Micro_Menu::init()
 	}
     
     
-    CCLabelTTF* ttf = CCLabelTTF::create("欧巴欧巴", "HiraKakuProN-W6", 40);
+    MZDataManager::sharedDataManager()->initXMLString("mirco/strings.xml");
+    CCString* teststr = MZDataManager::sharedDataManager()->getStringfromXml("welcome");
+    const char* title1 = teststr->m_sString.c_str();
+    
+    
+    CCLabelTTF* ttf = CCLabelTTF::create( MZDataManager::sharedDataManager()->stringWrap(title1, 600/30).c_str(), "HiraKakuProN-W6", 24);
+    ttf->setColor(ccc3(20, 123, 210));
+    //ttf->setAnchorPoint(ccp(0,0));
     ttf->setPosition(ccp(CCDirector::sharedDirector()->getWinSize().width/2,CCDirector::sharedDirector()->getWinSize().height*0.75));
+    
+    float width = ttf->getContentSize().width;
+    float height = ttf->getContentSize().height;
+    CCLog("width =%.2f heigt = %.2f",width,height);
     
     CCLabelTTF* ttf2 = CCLabelTTF::create("－－－来自星星的你", "HiraKakuProN-W6", 30);
     ttf2->setPosition(ccp(CCDirector::sharedDirector()->getWinSize().width*0.75,CCDirector::sharedDirector()->getWinSize().height*0.6));
@@ -127,6 +148,33 @@ bool Micro_Menu::init()
     
     this->addChild(menu_bg);
     
+    
+    
+    CCControlSlider* slider = CCControlSlider::create(g_sliderTable[0],g_sliderTable[1],g_sliderTable[2]);//slidering[0], slidering[1], slidering[2]
+    slider->setMinimumValue(0.0f);
+    slider->setMaximumValue(100.0f);
+    slider->addTargetWithActionForControlEvents(this, cccontrol_selector(Micro_Menu::sliderMove), CCControlEventValueChanged);
+    slider->setPosition(ccp(SCR_SIZE.width/2, SCR_SIZE.height*.5f));
+    this->addChild(slider);
+    
+    if(!CCUserDefault::sharedUserDefault()->getBoolForKey("ISEXIST")){
+		CCUserDefault::sharedUserDefault()->setBoolForKey("ISEXIST",true);
+        
+        slider->setValue(30.0f);
+        AudioManager::instance()->setGroundVolume(30.0/100.f);
+        AudioManager::instance()->saveConfig();
+        MyCCLog::verbose("is not esixts ============= ");
+	}
+	else{
+        AudioManager::instance()->loadConfig();
+        float pVlome = AudioManager::instance()->getGroundVolume();
+        CCLog("pLomeve=== %.2f",pVlome);
+        slider->setValue( pVlome*100.0f);
+         MyCCLog::verbose("is  esixts ============= ");
+    }
+    
+    
+    AudioManager::instance()->playGroundMusic(kAudio_city01);
   
 //    MZDataManager::sharedDataManager()->resetRandSeed();
 //    int idd =MZDataManager::sharedDataManager()->myRand(1, 10);
@@ -137,11 +185,24 @@ bool Micro_Menu::init()
 //    }
 //    else
 //        CCLog("go to rugao");
-//    CCLayer* server_layer = ServerPrizeList::create();
-//    this->addChild(server_layer);
+    CCLayer* server_layer = ServerPrizeList::create();
+    this->addChild(server_layer);
     
     
     return true;
+}
+
+void Micro_Menu::sliderMove(CCObject* pSender){
+    CCControlSlider* pSlider = (CCControlSlider*)pSender;
+    float pScale = -1.0;
+    pScale = pSlider->getValue();
+    
+    
+    AudioManager::instance()->setGroundVolume(pScale/100.0f);
+    AudioManager::instance()->updateGroundMusicVolume(pScale/100.0f);
+   
+    
+    CCLog("sliderMove pscale/100 === %.2f",pScale/100.0f);
 }
 
 
@@ -189,18 +250,23 @@ void Micro_Menu::updatescene(float t)
         MZDataManager::sharedDataManager()->delLoading();
         CCScene *pScene = LevelView::scene();
         CCDirector::sharedDirector()->replaceScene(CCTransitionFadeTR::create(1,pScene));
+    
+
+     AudioManager::instance()->playGroundMusic(kAudio_jingyiwanzhuan);
 
 }
 
 
 void Micro_Menu::menu_option_click(CCObject* pSender){
     
-   // CCMessageBox("庆哥真是好女丿, "title");
-}
+    CCMessageBox("ssss", "title");
+  }
 
 void Micro_Menu::menu_about_click(CCObject* pSender){
     
-//    CCMessageBox("庆哥真是好好女人", "title");
+    // 保存音量
+    AudioManager::instance()->saveConfig();
+
 }
 
 
